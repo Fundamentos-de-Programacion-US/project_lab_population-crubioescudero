@@ -50,7 +50,7 @@ FUNCTIONS THAT ARE PART OF THE EXERCISE:
 
 '''
 import csv
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt 
 from collections import namedtuple
 
 Registro = namedtuple('Registro', 'nombre, codigo, año, censo')
@@ -96,11 +96,24 @@ def calculate_countries(populations):
     for which there is at least one population data.
     The output list will not contain repeating elements.
     '''
+    res = set()
+    for nombre,codigo,año,censo in populations:
+        if censo > 0:
+            res.add(nombre)
+            
+    res_list = list(res)
+    res_list.sort()
+    return res_list
+    
+    
+    
+    
+    
     
 ##############################################################################################
 
 ############################################################################################## 
-def filter_by_country (towns, country):
+def filter_by_country (populations, country):
     '''Select the tuples corresponding to a specific country
     
     INPUT:
@@ -115,12 +128,22 @@ def filter_by_country (towns, country):
     either giving your full name, or giving your code.
     '''
     
+    res = list()
+    for nombre,codigo,año,censo in populations:
+        if country == nombre or country==codigo:
+            res.append((año,censo))
+    
+    return res
+    
+    
+     
+     
         
 ##############################################################################################
 
 ############################################################################################## 
 def filter_by_countries_and_year (populations, year, countries):
-   '''Select the tuples corresponding to a set of countries of a specific year
+    '''Select the tuples corresponding to a set of countries of a specific year
     
     INPUT:
        - populations: list of tuples (name, code, year, census) -> [(str, str, int, int)]
@@ -135,6 +158,14 @@ def filter_by_countries_and_year (populations, year, countries):
     corresponding to the year given as a parameter and of the countries
     included in the countries collection
     '''
+    res = list()
+    for nombre,_,año,censo in populations:
+        if año == year and nombre in countries:
+            res.append((nombre,censo))
+            
+    return res
+    
+    
     
 ##############################################################################################
 
